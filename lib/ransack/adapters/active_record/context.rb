@@ -25,9 +25,11 @@ module Ransack
           name        = attr.arel_attribute.name.to_s
           table       = attr.arel_attribute.relation.table_name
           connection  = attr.klass.connection
-          unless connection.table_exists?(table)
-            raise "No table named #{table} exists"
-          end
+          ## commented out following lines in order to allow access to materialized views
+          ## https://github.com/activerecord-hackery/ransack/issues/343
+          #unless connection.table_exists?(table)
+          #  raise "No table named #{table} exists"
+          #end
           connection.schema_cache.columns_hash(table)[name].type
         end
 
